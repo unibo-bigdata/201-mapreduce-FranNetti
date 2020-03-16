@@ -31,6 +31,12 @@ public class AvgTemperature {
 		conf.setMapperClass(AvgTemperatureMapper.class);      
 		conf.setReducerClass(AvgTemperatureReducer.class);
 
+		/**
+		 * se volessimo inserire una sorta di combiner si potrebbe già fare un mini conteggio di quanti
+		 * elementi si stanno andando a raccogliere, così da semplificare il conteggio totale da parte
+		 * del reducer finale
+		 */
+
 		if(args.length>2 && Integer.parseInt(args[2])>=0){
 			conf.setNumReduceTasks(Integer.parseInt(args[2]));
 		}

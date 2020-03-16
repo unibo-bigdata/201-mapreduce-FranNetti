@@ -18,10 +18,13 @@ implements Mapper<LongWritable, Text, Text, IntWritable> {
 		String line = value.toString();
 
 		String yearAndMonth = line.substring(15, 21);
-		int airTemperature = Integer.parseInt(line.substring(87, 92));
-
-		if ( airTemperature != MISSING ) {
-			output.collect(new Text(yearAndMonth), new IntWritable(airTemperature));
+		try {
+			int airTemperature = Integer.parseInt(line.substring(87, 92));
+			if (airTemperature != MISSING) {
+				output.collect(new Text(yearAndMonth), new IntWritable(airTemperature));
+			}
+		} catch (NumberFormatException e) {
+			System.err.println("Number format is wrong in [ " + line + " ]");
 		}
 	}
 }

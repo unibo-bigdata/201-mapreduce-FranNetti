@@ -17,8 +17,8 @@ public class AvgTemperatureReducer extends MapReduceBase implements Reducer<Text
 		double tot = 0, count = 0;
 		while (values.hasNext()) {
 			count++;
-			tot += (double) values.next().get() / 10;
+			tot += values.next().get();
 		}
-		output.collect(key, new DoubleWritable(tot / count));
+		output.collect(key, new DoubleWritable((tot / 10) / count));
 	}
 }

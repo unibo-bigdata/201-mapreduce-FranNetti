@@ -17,10 +17,14 @@ public class MaxTemperatureMapper extends MapReduceBase implements Mapper<LongWr
 		String line = value.toString();
 
 		String year = line.substring(15, 19);
-		int airTemperature = Integer.parseInt(line.substring(87, 92));
 
-		if (airTemperature != MISSING) {
-			output.collect(new Text(year), new IntWritable(airTemperature));
+		try {
+			int airTemperature = Integer.parseInt(line.substring(87, 92));
+			if (airTemperature != MISSING) {
+				output.collect(new Text(year), new IntWritable(airTemperature));
+			}
+		} catch (NumberFormatException e) {
+			System.err.println("Number format is wrong in [ " + line + " ]");
 		}
 	}
 }
